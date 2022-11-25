@@ -16,67 +16,70 @@
 : 프로젝트 세팅에 따라 프래그먼트를 다르게 사용한다
 ```
 
-### 2.2. React 복수개의 요소 반환 방법
+```js
+App.js;
+
+function App() {
+  return (
+    <div className="App">
+      <h1>Hello</h1>
+      <ul className="list">
+        <li>list1</li>
+        <li>list2</li>
+        <li>list3</li>
+        <li>list4</li>
+        <li>list5</li>
+      </ul>
+    </div>
+  );
+}
+
+export default App;
+```
+
+### 2.2. 한개의 파일에서 여러 컴포넌트를 export 하는 방법
 
 ```js
-Header.js
+Layout.js;
 
-import React from "react";
-
-const Header = () => {
+function Header() {
   return (
     <header>
-      <h1>LOGO</h1>
-      <a href="#">menu</a>
+      <div>Header</div>
     </header>
   );
-};
+}
+function Footer() {
+  return (
+    <footer>
+      <div>Footer</div>
+    </footer>
+  );
+}
+function Popup() {
+  return (
+    <header>
+      <div>Popup</div>
+    </header>
+  );
+}
 
-export default Header;
+export { Header, Footer, Popup };
 ```
 
 ```js
-Footer.js
+App.js;
 
-import React from "react";
-
-const Footer = () => {
-  return (
-    <header>
-      <h1>Footer</h1>
-    </header>
-  );
-};
-
-export default Footer;
-```
-
-```js
-App.js
-
-import Footer from "./Footer";
-import Header from "./Header";
+import { Header, Footer } from "./Layout";
 
 function App() {
   return (
     <>
       <Header />
-      <div className="App">
-        <h1>Hello</h1>
-        <ul className="list">
-          <li>list1</li>
-          <li>list2</li>
-          <li>list3</li>
-          <li>list4</li>
-          <li>list5</li>
-        </ul>
-      </div>
       <Footer />
     </>
   );
 }
 
 export default App;
-
-
 ```
