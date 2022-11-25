@@ -1,19 +1,40 @@
 #REACT 1.
 
-## 2. JSX 의 이해
+## 3. 이벤트 연결하는 법
 
 객체 형태의 가상돔을 리턴하는 역할
 
-### 2.1. React 복수개의 요소 반환 방법
+### 3.1. JSX 이벤트
 
-```html
-1. div로 감싸기
+camelCase 로 이벤트명 설정
 
-2. 프래그먼트 사용하기
-: 불필요한 부모태그 생성을 막기 위해서는 <></> (fragment)로 감싸준다.
-: 아래는 udemy 강의에서 추가적으로 알려준 방법이다.
-: react를 import 해왔을 경우에는 <React.Fragment></React.Fragment> 로 작성할 수도 있다.
-: 프로젝트 세팅에 따라 프래그먼트를 다르게 사용한다
+가상돔 요소에서 연산이 필요한 부분은 { } 로 감싸줘야하기
+때문에 이벤트 부분을 중괄호로 감싸준다.
+
+중괄호로 감싸 준 곳 안에 익명하수로 등록할 함수를 작성한다.
+
+이벤트는 하나의 가상돔 요소에 복수 개의 이벤트를 연결할 수 있다.
+
+```js
+function App() {
+  return (
+    <div className="App">
+      {/* 하나의 가상돔 요소에 복수개의 이벤트 연결 가능 */}
+      <h1
+        onMouseEnter={() => {
+          console.log("mouseenter");
+        }}
+        onMouseLeave={() => {
+          console.log("mouseleave");
+        }}
+      >
+        Title
+      </h1>
+    </div>
+  );
+}
+
+export default App;
 ```
 
 ```js
@@ -22,14 +43,13 @@ App.js;
 function App() {
   return (
     <div className="App">
-      <h1>Hello</h1>
-      <ul className="list">
-        <li>list1</li>
-        <li>list2</li>
-        <li>list3</li>
-        <li>list4</li>
-        <li>list5</li>
-      </ul>
+      {/* 하나의 가상돔 요소에 복수개의 이벤트 연결 가능 */}
+      <h1
+        onMouseEnter={() => console.log("mouseenter")}
+        onMouseLeave={() => console.log("mouseleave")}
+      >
+        Title
+      </h1>
     </div>
   );
 }
@@ -37,47 +57,21 @@ function App() {
 export default App;
 ```
 
-### 2.2. 한개의 파일에서 여러 컴포넌트를 export 하는 방법
-
 ```js
-Layout.js;
-
-function Header() {
-  return (
-    <header>
-      <div>Header</div>
-    </header>
-  );
-}
-function Footer() {
-  return (
-    <footer>
-      <div>Footer</div>
-    </footer>
-  );
-}
-function Popup() {
-  return (
-    <header>
-      <div>Popup</div>
-    </header>
-  );
-}
-
-export { Header, Footer, Popup };
-```
-
-```js
-App.js;
-
-import { Header, Footer } from "./Layout";
-
 function App() {
+  const handleClick = () => {
+    alert("click2");
+  };
+  const handleArg = (txt) => {
+    alert(txt);
+  };
   return (
-    <>
-      <Header />
-      <Footer />
-    </>
+    <div className="App">
+      <button onClick={() => alert("click")}>버튼1</button>
+      {/* 미리 선언된 함수를 대입해서 호출 */}
+      <button onClick={handleClick}>버튼2</button>
+      <button onClick={() => handleArg("hello")}>버튼3</button>
+    </div>
   );
 }
 
